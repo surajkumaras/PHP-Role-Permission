@@ -192,7 +192,7 @@ $(document).ready(function()
                 })
               
             } else {
-              swal("Your imaginary file is safe!");
+              swal("Your file is safe!");
             }
           });
           

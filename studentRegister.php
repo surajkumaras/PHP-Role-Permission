@@ -217,7 +217,8 @@ $(document).ready(function()
                 },
                 age:{
                     required:true,
-                    digits:true
+                    digits:true,
+                    range:[16,30],
                 },
                 city:{
                     required:true,
@@ -238,6 +239,11 @@ $(document).ready(function()
                 },
                 conpassword:{
                     equalTo:"#password",
+                }
+            },
+            messages:{
+                age:{
+                    
                 }
             },
             

@@ -3,13 +3,10 @@ include_once '../conn.php';
 
 if(isset($_POST))                   // <---- CHECK GLOBAL VARIABLE --<<
 {
-//    echo "<pre>";
-//    print_r($_POST);           
-//    echo "</pre>";
-//    die();
 
     if(isset($_SESSION['is_admin']) )           // <--- CHECK IS ADMIN SESSION IS CREATED OR NOT ---<<
         {
+            $is_admin = $_SESSION['is_admin'];
             if(isset($_SESSION['role_id']))
             {
                 $role_id = $_SESSION['role_id'];
@@ -25,22 +22,22 @@ if(isset($_POST))                   // <---- CHECK GLOBAL VARIABLE --<<
                     }
                 }
             }
-        if($_SESSION['name'])
-        {
-            $username = $_SESSION['name'];
-        }
-        
-            
-        
-        $id = $_SESSION['id'];
-        $name = $_POST['name'];
-        $age = $_POST['age'];
-        $email = $_POST['email'];
-        $mobile = $_POST['mobile'];
-        $city = $_POST['city'];
-        $gender = $_POST['gender'];
-        $cls = $_POST['stream'];
-        $subjects = $_POST['sub'];                  // <---- ARRAY DATA -----<<
+            if($_SESSION['name'])
+            {
+                $username = $_SESSION['name'];
+            }
+
+
+
+            $id = $_SESSION['id'];
+            $name = $_POST['name'];
+            $age = $_POST['age'];
+            $email = $_POST['email'];
+            $mobile = $_POST['mobile'];
+            $city = $_POST['city'];
+            $gender = $_POST['gender'];
+            $cls = $_POST['stream'];
+            $subjects = $_POST['sub'];                  // <---- ARRAY DATA -----<<
         
         try
         {
@@ -62,41 +59,53 @@ if(isset($_POST))                   // <---- CHECK GLOBAL VARIABLE --<<
                         $sql2 = "INSERT INTO tbl_student_subject(student_id,subject_id) VALUES($id,$value)";
                         $res2 = mysqli_query($conn,$sql2) or die("Failed to Insert into db");
                     }
-
-                    if($usertype === '0')
+                    
+                    if($is_admin  === '0')
                     {
+                        
                         ?>
+                        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
                         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
                         <script>
-                           swal({
+                           $(document).ready(function()
+                           {
+                               swal({
                                 title: "Good job!",
-                                text: "You clicked the button!",
+                                text: "Profile updated successfully !!",
                                 icon: "success",
-                                button: "Aww yiss!",
+                                button: "OK!",
                               });
-                              window.location.href="../profile.php";
+                              
+                              setTimeout(()=>{
+                                  window.location.href="../profile.php";
+                              },3000);
+                           });
                         </script>
-                        
                         
                         <?php
                     }
-                    else 
+                    
+                    if($is_admin  === '1')
                     {
                         ?>
+                        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
                         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
                         <script>
-                           swal({
+                           $(document).ready(function()
+                           {
+                               swal({
                                 title: "Good job!",
-                                text: "You clicked the button!",
+                                text: "Details updated successfully !!",
                                 icon: "success",
-                                button: "Aww yiss!",
+                                button: "OK!",
                               });
-                              window.location.href="../studentList.php";
+                              
+                              setTimeout(()=>{
+                                  window.location.href="../studentList.php";
+                              },3000);
+                           });
                         </script>
-                        
-                        
                         <?php
-                        
                     }
                 }
                 else 
