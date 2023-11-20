@@ -3,7 +3,7 @@
     
     if(isset($_SESSION['is_admin']))
     {
-        
+        // nothing to do
     }
     else 
     {
