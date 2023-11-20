@@ -3,7 +3,8 @@
     
     if(isset($_SESSION['is_admin']))
     {
-        // nothing to do
+       
+        //new file
     }
     else 
     {
