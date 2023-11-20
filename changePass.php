@@ -4,7 +4,8 @@
     if(isset($_SESSION['is_admin']))
     {
        
-        //new file
+        
+        //old comment
     }
     else 
     {
