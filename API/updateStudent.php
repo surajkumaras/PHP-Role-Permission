@@ -70,7 +70,7 @@ if(isset($_POST))                   // <---- CHECK GLOBAL VARIABLE --<<
                            $(document).ready(function()
                            {
                                swal({
-                                title: "Good job!",
+                                title: "Updated!",
                                 text: "Profile updated successfully !!",
                                 icon: "success",
                                 button: "OK!",

@@ -152,10 +152,8 @@ if(isset($_SESSION['is_admin'])&& $_SESSION['is_admin'] == '1')
                 $sql = "INSERT INTO tbl_student_info(name,age,gender,course,email,city,mobile,password) VALUES('$name','$age','$gender','$cls','$email','$city','$mobile','$pass')";
                 $res = mysqli_query($conn,$sql) or die("Failed");
 
-
                 if($res)
                 {
-
                     $student_id = mysqli_insert_id($conn);
                     $subjects = $sub ;
 
@@ -167,14 +165,18 @@ if(isset($_SESSION['is_admin'])&& $_SESSION['is_admin'] == '1')
 
                     $qry3 = "insert into tbl_student_role(student_id,role_id)values($student_id,3)";
                     $res3 = mysqli_query($conn,$qry3);
-                    
+                    $usertype;
                     if(isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == '1')
                     {
-                        header("location:../studentList.php");
+                        $usertype = 1;
+                    }
+                    else 
+                    {
+                        $usertype = 0;
                     }
                     
                     http_response_code(200); // Return a 200 OK status code
-                    echo "Registration Done";
+                    echo json_encode(['message' => 'Registration Done', 'usertype' => $usertype]);
                 }
                 else 
                 {

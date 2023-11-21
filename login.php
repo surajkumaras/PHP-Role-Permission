@@ -87,7 +87,6 @@ $(document).ready(function()
                             $("#loader").hide();
                             console.log(response);
                             window.location.href="index.php";
-
                         },
                         error:function(xhr,status,error)
                         {
@@ -95,7 +94,7 @@ $(document).ready(function()
                             if(xhr.status === 400)
                             {
                                 $("#err").html(xhr.responseText);
-                               
+                               //check comment
                             }
                         }
                     });

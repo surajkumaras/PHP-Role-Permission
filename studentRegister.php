@@ -37,8 +37,8 @@
         </div>
         <div class="form-group">
             <label for="stream">Class</label>
-            <select id="stream" name="stream">
-                <option value="0">Select stream</option>
+            <select id="stream" name="stream" class="required" >
+                <option>Select stream</option>
                 <option value="bca">BCA</option>
                 <option value="mca">MCA</option>
                 <option value="dca">DCA</option>
@@ -75,7 +75,7 @@
                                 echo "No subjects available.";
                             }
                         ?>
-                        </div>
+            </div>
             <span class="errors"></span>
         </div>
                 <div class="form-group">
@@ -112,7 +112,7 @@
             </div></div></div>
     </form>
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js" referrerpolicy="no-referrer"></script>
     </body>
 </html>
 <script>
@@ -159,7 +159,8 @@ $(document).ready(function()
             success:function(response)
             {
                 let val = $.trim(response); 
-                if (val) {
+                if (val) 
+                {
                     $("#err").html(response);
                 }
                 else 
@@ -170,8 +171,6 @@ $(document).ready(function()
             error:function(xhr,status,error)
             {
                 console.log("error");
-
-
             }
         });
     });
@@ -220,6 +219,13 @@ $(document).ready(function()
                     digits:true,
                     range:[16,30],
                 },
+                stream: {
+                        required: true
+                    },
+                'sub[]': {
+                        required: true,
+                        minlength: 1
+                    },
                 city:{
                     required:true,
                 },
@@ -242,8 +248,12 @@ $(document).ready(function()
                 }
             },
             messages:{
-                age:{
-                    
+                stream: {
+                        required: "Please select a stream"
+                    },
+                'sub[]': {
+                    required: "Please select at least one subject",
+                    minlength: "Please select at least one subject"
                 }
             },
             
@@ -254,7 +264,7 @@ $(document).ready(function()
                 {
                   selectedValues.push($(this).val());
                 });
-                //console.log(selectedValues);
+                
                
                 let name = $("#name").val();
                 let regex = /^[a-zA-Z]+$/;
@@ -285,22 +295,27 @@ $(document).ready(function()
                         url:'API/registerStudent.php',
                         type:'post',
                         data:formData,
+                        dataType:'json',
                         success:function(xhr, status,data)
                         {
                             swal({
                                 title: "Registration Done!",
                                 text: "success!",
                                 icon: "success",
-                                button: "Aww yiss!",
+                                button: "OK",
                               });
 
-                                console.log(data);
-                                setTimeout(() => {
-                                    window.location.href = "login.php"; 
-                                }, 5000);
-
-
-                            console.log("Return Data",data);
+                              setTimeout(() => {
+                                    console.log(data); //check data on console
+                                    if (data.usertype === 1) 
+                                    {
+                                        window.location.href = 'studentListAdmin.php';
+                                    } else {
+                                        window.location.href = 'studentList.php';
+                                    }
+                                }, 3000);
+                              
+                                
                         },
                         error: function(xhr, status, error) 
                         {

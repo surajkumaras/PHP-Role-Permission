@@ -23,13 +23,21 @@
         <link rel="stylesheet" href="CSS/style.css">
 	<link rel="stylesheet" href="CSS/responsive.css">
         <link rel="stylesheet" href="CSS/addSubject.css">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        
     </head>
     <body>
         <?php include_once 'header.php';?>
         <div class="main-container">
             <?php include_once 'sidenav.php'; ?>
             <div class="report-container">
-            <center><h2>Subjects</h2></center>
+                <div class="alert alert-success alert-dismissible notify" id="notify">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Success!</strong> New subject add successfully.
+                  </div>
+            <center><h2>Available Subjects</h2></center>
             <div class="d-flex">
                 <div class="d1 flex-fill p-3">
                 <table class="table" id='table'>
@@ -73,7 +81,8 @@
             ?>
             </div>
         </div>
-            <script src='ajaxCallAPI.js'></script>
+            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+            
     </body>
 </html>
 <style>
@@ -87,3 +96,74 @@ body
         opacity: 0.6;
     }
 </style>
+
+<script>
+$(document).ready(function() 
+    {
+        $("#notify").hide();
+        // ************** SHOW ALL AVAILABLE SUBJECTS *********//
+        
+        function updateTable()
+        {
+            $.ajax({
+                url:'API/showAll.php',
+                method:'post',
+                dataType:'JSON',
+                success:function(data)
+                {
+                     console.log(data);
+                     var tbody = $('#tbody');
+                     
+                    
+                    var output = "";
+                    console.log(data.length);
+
+                    for (let i = 0; i < data.length; i++) 
+                    {
+                        output += '<tr><th scope="row">' + data[i].id + '</th><td>SUB00' + data[i].id + '</td><td>' + data[i].name + '</td></tr>';
+                    }
+
+                    tbody.html(output);
+                },
+                error:function(e)
+                {
+                    console.log(e);
+                }
+            })
+        }
+        
+        updateTable();
+        
+        //<--- ADD NEW SUBJECT API CALL AJAX ----<<
+        
+        $('#subfrm').submit(function(e)  
+        {
+            e.preventDefault(); 
+
+            // Get the form data
+            var formData = $(this).serialize();
+
+            $.ajax({
+                url: 'API/addsubject.php',
+                method: 'post',
+                data: formData, 
+                success: function(data) 
+                {
+                    console.log(data);
+                    
+                    
+                        $("#notify").show();
+                        updateTable();
+                    setTimeout(()=>{
+                        $("#notify").fadeOut();
+                    },2000);
+                },
+                error: function(e) {
+                    console.log(e);
+                    console.log("error");
+                }
+            });
+        });
+    });
+
+</script>

@@ -3,9 +3,6 @@
     
     if(isset($_SESSION['is_admin']))
     {
-       
-        
-        //old comment
     }
     else 
     {
@@ -46,9 +43,9 @@
     </style>
 </head>
 <body>
-    <?php include_once 'header.php'; ?>
+    <?php include_once 'header.php'; ?>         <!--  <--- LOAD HEADER NAVIGATION --<< -->
     <div class="main-container">
-        <?php include_once 'sidenav.php'; ?>
+        <?php include_once 'sidenav.php'; ?>    <!--  <--- SIDE  NAVIGATION --<< -->
         <div class="report-container">
             <div class="main">
                 <center><h2>Change Password</h2></center>
@@ -83,7 +80,7 @@
     
     $(document).ready(function() 
     {
-        jQuery("#updatepass").validate({
+        jQuery("#updatepass").validate({        //<----- LOGIN VALIDATION ----<<
             rules: {
                 old_pass: {
                     required: true
@@ -102,7 +99,7 @@
             let oldpass = $("#oldpass").val();
             let newpass = $("#newpass").val();
             let conpass = $("#conpass").val();
-            const formData = {
+            const formData = {                      // <--- PACK DATA VAIABLE INTO OBJECT FORM ---<<
                 old_pass: oldpass,
                 new_pass: newpass,
                 con_pass: conpass
@@ -110,7 +107,7 @@
 
             console.log(formData);
 
-            $.ajax({
+            $.ajax({                                //<----- AJAX---CODE----<<
                 url:'API/changePassword.php',
                 type:'post',
                 data:JSON.stringify(formData),
@@ -123,14 +120,14 @@
                     
                         $("#err").html("");
                         
-                        swal({
+                        swal({                              //<----- SWEET ALERT FOR SUCCESS ----<<
                             title: "Password Changed!",
                             text: "You clicked the button!",
                             icon: "success",
-                            button: "Aww yiss!",
+                            button: "OK!",
                           });
                           
-                        setTimeout(()=>{window.location.href="login.php"},3000);
+                    setTimeout(()=>{window.location.href="login.php"},3000);    //<--- REDIRECT TO LOGIN IF PASSWORD CHANGED ---<<
                     
                 },
                 error:function(xhr,status,error)
@@ -139,12 +136,12 @@
                     if(xhr.status == '401')
                     {
                         console.log(xhr.status);
-                        $("#err").html(xhr.responseJSON.status);
+                        $("#err").html(xhr.responseJSON.status);        //<-----   ERROR MESSAGE FORM BACKEND --<<
                     }
                     
                     if(xhr.status == '400')
                     {
-                        $("#err").html(xhr.responseJSON.status);
+                        $("#err").html(xhr.responseJSON.status);        //<-----   ERROR MESSAGE FORM BACKEND --<<
                     }
                 }
             })
@@ -153,7 +150,7 @@
 
     $("#checkbtn").click(function() 
     {
-        $("#updatepass").submit(); // Trigger form submission when the button is clicked
+        $("#updatepass").submit();          //<---- SUBMIT FORM AFTER CLICK ON SUBMIT BUTTON ---<<
     });
 });
 

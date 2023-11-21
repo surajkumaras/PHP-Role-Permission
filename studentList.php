@@ -25,19 +25,20 @@
             <?php include_once 'sidenav.php';  ?>
             <div class="main" style="width:100%">
                 <div class="report-container">
+                    <div class="table-responsive">
         <table class="table">
             <thead class="thead-dark">
               <tr>
-                <th scope="col">Roll No.</th>
-                <th scope="col">Student Name</th>
-                <th scope="col">Age</th>
-                <th scope="col">Gender</th>
-                <th scope="col">Class</th>
-                <th scope="col">Email</th>
-                <th scope="col">Mobile</th>
-                <th scope="col">City</th>
-                <th scope="col">Subjects</th>
-                <th scope="col">Action</th>
+                <th scope="col" class="d-none d-sm-table-cell">Roll No.</th>
+                <th scope="col" class="d-none d-sm-table-cell">Student Name</th>
+                <th scope="col" class="d-none d-sm-table-cell">Age</th>
+                <th scope="col" class="d-none d-sm-table-cell">Gender</th>
+                <th scope="col" class="d-none d-sm-table-cell">Class</th>
+                <th scope="col" class="d-none d-sm-table-cell">Email</th>
+                <th scope="col" class="d-none d-sm-table-cell">Mobile</th>
+                <th scope="col" class="d-none d-sm-table-cell">City</th>
+                <th scope="col" class="d-none d-sm-table-cell">Subjects</th>
+                <th scope="col" class="d-none d-sm-table-cell">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -49,16 +50,16 @@
                         while($r = mysqli_fetch_array($res))
                         {
                             echo "<tr>";
-                                echo "<td>$r[0]</td>";
-                                echo "<td>$r[1]</td>";
-                                echo "<td>$r[2]</td>";
-                                echo "<td>$r[3]</td>";
-                                echo "<td>" . strtoupper($r[4]) . "</td>";
-                                echo "<td>$r[5]</td>";
-                                echo "<td>$r[6]</td>";
-                                echo "<td>$r[7]</td>";
-                                echo "<td>$r[8]</td>";
-                                echo "<td>";
+                                echo "<td scope='col' class='d-none d-sm-table-cell'>$r[0]</td>";
+                                echo "<td scope='col' class='d-none d-sm-table-cell'>$r[1]</td>";
+                                echo "<td scope='col' class='d-none d-sm-table-cell'>$r[2]</td>";
+                                echo "<td scope='col' class='d-none d-sm-table-cell'>$r[3]</td>";
+                                echo "<td scope='col' class='d-none d-sm-table-cell'>" . strtoupper($r[4]) . "</td>";
+                                echo "<td scope='col' class='d-none d-sm-table-cell'>$r[5]</td>";
+                                echo "<td scope='col' class='d-none d-sm-table-cell'>$r[6]</td>";
+                                echo "<td scope='col' class='d-none d-sm-table-cell'>$r[7]</td>";
+                                echo "<td scope='col' class='d-none d-sm-table-cell'>$r[8]</td>";
+                                echo "<td scope='col' class='d-none d-sm-table-cell'>";
                                 if(isset($_SESSION['permissions']['Edit Student']) && $_SESSION['permissions']['Edit Student'] == 'Edit Student')
                                 {
                                     echo "<a><button class='btn btn-info edit-student' student-id = '$r[0]'>Edit</button></a>";
@@ -79,7 +80,7 @@
                 ?>
             </tbody>
           </table>
-                </div></div></div></div>
+                    </div></div></div></div></div>
         
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
         <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
@@ -211,4 +212,8 @@ body
     {
         opacity: 0.6;
     }
+    
+    .table-responsive {
+    overflow-x: auto;
+}
 </style>
